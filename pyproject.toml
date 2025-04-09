@@ -1,3 +1,67 @@
+[build-system]
+requires = ["setuptools", "pip"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "git-pre-hook"
+version = "0.1.0"
+description = "test"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "python-dotenv==1.0.1",
+    "autohooks", 
+    "autohooks-plugin-black",
+    "autohooks-plugin-ruff",
+    "autohooks-plugin-isort",
+    "autohooks-plugin-flake8",
+    "autohooks-plugin-pylint",
+    "autohooks-plugin-mypy",
+    "autohooks-plugin-pytest"
+]
+
+[project.optional-dependencies]
+autohooks = [
+    "autohooks-plugin-black",
+    "autohooks-plugin-ruff",
+    "autohooks-plugin-isort",
+    "autohooks-plugin-flake8",
+    "autohooks-plugin-pylint",
+    "autohooks-plugin-mypy"
+]
+
+[project.scripts]
+post_install = "dev_tools.post_install:install_autohooks"
+
 [tool.autohooks]
-mode = "poetry"
-pre-commit = ["autohooks.plugins.pylint"]
+mode = "pythonpath"
+pre-commit = [
+    "autohooks.plugins.black",
+    "autohooks.plugins.ruff",
+    "autohooks.plugins.isort",
+    "autohooks.plugins.flake8",
+    "autohooks.plugins.pylint",
+    "autohooks.plugins.mypy",
+    "autohooks.plugins.pytest"
+]
+
+[tool.autohooks.plugins.black]
+line-length = 88  # Adjust as needed
+
+[tool.autohooks.plugins.ruff]
+select = ["E", "F", "W"]  # Adjust as needed
+
+[tool.autohooks.plugins.isort]
+profile = "black"  # Ensures compatibility with black formatting
+
+[tool.autohooks.plugins.flake8]
+max-line-length = 88  # Adjust as needed
+
+[tool.autohooks.plugins.pylint]
+disable = ["C0114", "C0115", "C0116"]  # Adjust as needed
+
+[tool.autohooks.plugins.mypy]
+files = ["your_package", "tests"]  # Adjust as needed
+
+[tool.autohooks.plugins.pytest]
+arguments = ["--maxfail=1", "--disable-warnings", "--capture=no"]  # Adjust as needed
