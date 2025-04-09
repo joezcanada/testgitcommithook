@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Define the path to the pre-commit hook
+HOOK_PATH=".git/hooks/pre-commit"
+
+# Check if the pre-commit hook is already installed
+if [ ! -f "$HOOK_PATH" ]; then
+  echo "Installing pre-commit hook..."
+  cp ../../.githooks/pre-commit "$HOOK_PATH"
+  chmod +x "$HOOK_PATH"
+else
+  echo "Pre-commit hook is already installed."
+fi
+
